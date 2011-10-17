@@ -1,0 +1,28 @@
+name:                aeson-wai-example
+version:             0.1
+synopsis:            Aeson & WAI Example
+description:         Shows an example of how easy it is to build a super fast
+                     json rest service.
+homepage:            http://dysinger.net
+license:             OtherLicense
+license-file:        LICENSE
+author:              Tim Dysinger
+maintainer:          tim@dysinger.net
+category:            System
+stability:           Experimental
+build-type:          Simple
+cabal-version:       >= 1.2.3
+
+executable           aeson-wai-example
+  main-is:           Main.hs
+  ghc-options:       -Wall
+                     -rtsopts
+                     -static
+                     -threaded
+  build-depends:     base >= 4.3
+                   , aeson
+                   , http-types
+                   , text
+                   , wai
+                   , wai-app-static
+                   , warp
