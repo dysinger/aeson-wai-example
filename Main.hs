@@ -22,7 +22,7 @@ resource NHT.GET _uuid _req =
   where user = User { name = "Tim Dysinger", email = "tim@dysinger.net" }
         json = DA.encode user
         headers = [("Content-Type", "application/json")]
-resource _ _ _ =
+resource _       _     _    =
   -- we only accept GET requests right now
   return $ NW.responseLBS NHT.statusNotAllowed [("Accept", "GET")] ""
 
@@ -32,13 +32,13 @@ dispatch app req =
     -- handle the route /api/v1/resource/:uuid
     ("api":"v1":"resource":uuid:_) -> resource (method req) uuid req
     -- otherwise pass the request to the next app
-    _                            -> app req
+    _                              -> app req
   where path :: NW.Request -> [DT.Text]
         path req' = filter (\p -> p /= "") $ map DT.toLower $ NW.pathInfo req'
         method :: NW.Request -> NHT.StdMethod
         method req' = case NHT.parseMethod $ NW.requestMethod req' of
           Right m -> m
-          Left _ -> NHT.GET
+          Left  _ -> NHT.GET
 
 main :: IO ()
 main = NWHW.run 8080 $
